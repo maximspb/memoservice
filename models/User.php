@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 
@@ -24,7 +25,7 @@ use yii\web\IdentityInterface;
  * @property string $telephone
  * @property string $gender
  */
-class User extends \yii\db\ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -101,22 +102,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord) {
-                $this->auth_key = Yii::$app->security->generateRandomString();
-                $this->status = self::STATUS_ACTIVE;
-                try {
-                    $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-                } catch (\Throwable $e) {
-                    echo $e->getMessage(); die();
-                }
-            }
-            return true;
-        }
-        return false;
-    }
 
     public static function find()
     {
@@ -125,7 +110,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id]);
     }
     /**
      * {@inheritdoc}
@@ -203,5 +188,30 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRole('worker');
+        $auth->assign($userRole, $this->getId());
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->auth_key = Yii::$app->security->generateRandomString();
+                $this->status = self::STATUS_ACTIVE;
+                try {
+                    $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+                } catch (\Throwable $e) {
+                    echo $e->getMessage(); die();
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
