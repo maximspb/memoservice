@@ -21,11 +21,16 @@ class m180406_104755_create_user_table extends Migration
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string()->notNull()->unique(),
+            'email' => $this->string()->notNull()->unique(),
+            'last_name' =>$this->string(50)->notNull(),
+            'initials' => $this->string(4)->notNull(),
+            'job' => $this->string(100)->notNull(),
+            'telephone' => $this->string(10),
+            'gender' => $this->string(1),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
+            'status' => $this->smallInteger()->notNull()->defaultValue(1),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ], $tableOptions);
