@@ -198,12 +198,27 @@ class User extends ActiveRecord implements IdentityInterface
         $auth->assign($userRole, $this->getId());
     }
 
-    public function beforeSave($insert)
+    /*public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            if ($this->isNewRecord){
+                try {
+                $this->auth_key = Yii::$app->security->generateRandomString();
+                $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+                } catch (\Exception $e) {
+                    die('error');
+                }
+                $this->status = self::STATUS_ACTIVE;
+            }
+            return true;
+        }
+        return false;
+    }*/
+
+    /*public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                $this->auth_key = Yii::$app->security->generateRandomString();
-                $this->status = self::STATUS_ACTIVE;
                 try {
                     $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
                 } catch (\Throwable $e) {
@@ -213,5 +228,5 @@ class User extends ActiveRecord implements IdentityInterface
             return true;
         }
         return false;
-    }
+    }*/
 }
