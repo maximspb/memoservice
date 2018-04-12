@@ -8,14 +8,13 @@ use Yii;
 
 class SignupForm extends Model
 {
-    public $username;
     public $email;
     public $password;
     public $last_name;
     public $initials;
     public $job;
     public $telephone;
-    public $gender;
+    public $genitive;
 
 
     /**
@@ -24,11 +23,6 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => 'app\models\User', 'message' => 'Такой логин уже занят'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
@@ -44,10 +38,22 @@ class SignupForm extends Model
             ['job', 'string', 'max' => 100],
             ['last_name', 'string', 'max' => 50],
             ['telephone', 'string', 'max' => 10],
-            ['gender', 'string', 'max' => 1]
+            ['genitive', 'string', 'max' => 55]
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'email' => 'Email',
+            'genitive' => 'Фамилия в родительном падеже ("от кого")',
+            'initials' => 'Инициалы',
+            'job' => 'Должность',
+            'telephone' => 'Внутренний телефон',
+            'last_name' => 'Фамилия',
+            'password' => 'Пароль',
+        ];
+    }
     /**
      * Signs user up.
      *
@@ -57,17 +63,14 @@ class SignupForm extends Model
     {
         if ($this->validate()) {
             $user = new User();
-            $user->username = $this->username;
             $user->email = $this->email;
             $user->last_name = $this->last_name;
             $user->initials = $this->initials;
+            $user->genitive = $this->genitive;
             $user->job = $this->job;
             $user->telephone = $this->telephone;
-            $user->gender = $this->gender;
-            //$user->password_reset_token = $user->generatePasswordResetToken();
             $user->setPassword($this->password);
             $user->auth_key = Yii::$app->security->generateRandomString();
-
             return $user->save() ? $user : null;
         }
 

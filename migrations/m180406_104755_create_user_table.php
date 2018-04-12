@@ -20,9 +20,9 @@ class m180406_104755_create_user_table extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'last_name' =>$this->string(50)->notNull(),
+            'genitive' => $this->string(55)->notNull(),
             'initials' => $this->string(4)->notNull(),
             'job' => $this->string(100)->notNull(),
             'telephone' => $this->string(10),
@@ -31,8 +31,8 @@ class m180406_104755_create_user_table extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(1),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
         ], $tableOptions);
     }
 

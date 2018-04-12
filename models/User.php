@@ -11,7 +11,6 @@ use yii\web\IdentityInterface;
  * This is the model class for table "user".
  *
  * @property int $id
- * @property string $username
  * @property string $email
  * @property string $auth_key
  * @property string $password_hash
@@ -51,9 +50,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'auth_key', 'password_hash'], 'required'],
+            [['email', 'auth_key', 'password_hash'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
+            [['email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             ['password_reset_token', 'unique'],
@@ -76,13 +75,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
             'email' => 'Email',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'genitive' => 'Фамилия в родительном падеже ("от кого")',
+            'initials' => 'Инициалы',
+            'created_at' => 'Время создания',
+            'updated_at' => 'Время обновления',
         ];
     }
 
@@ -119,15 +116,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['access_token' => $token]);
     }
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
+
+
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email]);
     }
     /**
      * {@inheritdoc}
@@ -197,36 +190,4 @@ class User extends ActiveRecord implements IdentityInterface
         $userRole = $auth->getRole('worker');
         $auth->assign($userRole, $this->getId());
     }
-
-    /*public function beforeValidate()
-    {
-        if (parent::beforeValidate()) {
-            if ($this->isNewRecord){
-                try {
-                $this->auth_key = Yii::$app->security->generateRandomString();
-                $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-                } catch (\Exception $e) {
-                    die('error');
-                }
-                $this->status = self::STATUS_ACTIVE;
-            }
-            return true;
-        }
-        return false;
-    }*/
-
-    /*public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord) {
-                try {
-                    $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-                } catch (\Throwable $e) {
-                    echo $e->getMessage(); die();
-                }
-            }
-            return true;
-        }
-        return false;
-    }*/
 }

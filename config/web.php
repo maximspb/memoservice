@@ -25,7 +25,7 @@ $config = [
             ],
         ]
     ],
-    'as access' => [
+    /*'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/*',
@@ -36,8 +36,11 @@ $config = [
             // add a lot of actions here until you finally completed setting up rbac,
             // otherwise you may not even take a first step.
         ]
-    ],
+    ],*/
     'components' => [
+        'pdf' => [
+            'class' => 'kartik\mpdf\Pdf',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
