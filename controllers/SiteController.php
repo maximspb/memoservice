@@ -143,17 +143,4 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
-    public function actionTmp()
-    {
-        $word1 = str_split('harpoon');
-        $word2 = str_split('countryside');
-
-        return (function($array1, $array2) {
-            return implode(
-                array_unique(
-                    array_intersect($array1, $array2))
-            );
-        })($word1, $word2);
-    }
 }
