@@ -13,36 +13,16 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
-        'admin' => [
-            'class' => 'mdm\admin\Module',
-            'layout' => 'left-menu',
-            //'mainLayout' => '@app/views/layouts/main.php',
-            'menus' => [
-                'assignment' => [
-                    'label' => 'Назначение прав'
-                ],
-                'route' => null, // disable menu
-            ],
-        ]
+
     ],
-    /*'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'site/*',
-            'admin/*',
-            // The actions listed here will be allowed to everyone including guests.
-            // So, 'admin/*' should not appear here in the production, of course.
-            // But in the earlier stages of your development, you may probably want to
-            // add a lot of actions here until you finally completed setting up rbac,
-            // otherwise you may not even take a first step.
-        ]
-    ],*/
+
     'components' => [
         'pdf' => [
             'class' => 'kartik\mpdf\Pdf',
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['guest', 'user'],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -80,6 +60,18 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+            ],
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        //'main' => 'main.php',
+                    ],
+                ],
             ],
         ],
         

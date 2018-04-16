@@ -20,13 +20,17 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -140,4 +144,16 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionTmp()
+    {
+        $word1 = str_split('harpoon');
+        $word2 = str_split('countryside');
+
+        return (function($array1, $array2) {
+            return implode(
+                array_unique(
+                    array_intersect($array1, $array2))
+            );
+        })($word1, $word2);
+    }
 }
