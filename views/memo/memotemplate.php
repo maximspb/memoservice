@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+?>
+
 <div class="memo-block">
     <div class="memo-head" align="right">
         <?php foreach ($model->recipients as $boss): ?>
@@ -35,7 +40,6 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col-lg-12" align="right">
             <table width="100%">
                 <tr>
@@ -44,14 +48,13 @@
                         <?= $model->user->telephone ?>
                     </td>
                     <td align="right">
-                        <img src="/sign/sign.png" alt="">
+                     <?= !empty($model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
                     </td>
-                    <td>
+                    <td align="center">
                         <?= $model->user->last_name . ' ' . $model->user->initials ?>
                     </td>
                 </tr>
             </table>
-
         </div>
     </div>
 </div>

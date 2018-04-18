@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <p>
     <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
+    <?= Html::a('Открыть pdf и сохранить на свой комп', ['getpdf', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
 
 </p>
 
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </table>
     <br>
-    <div class="row" style="margin-top: 10px">
+    <div class="row">
         <div class="col-lg-12">
             <article>
                 <?= $model->text ?>
@@ -58,13 +59,22 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-2">
-            <?= $model->user->job ?><br>
-            <?= $model->user->telephone ?>
-        </div>
-        <div class="col-lg-8"></div>
-        <div class="col-lg-2">
-            <?= $model->user->last_name . ' ' . $model->user->initials ?>
+
+        <div class="col-lg-12" align="right">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <?= $model->user->job ?><br>
+                        <?= $model->user->telephone ?>
+                    </td>
+                    <td align="right">
+                        <?= ('1' == $model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
+                    </td>
+                    <td align="center">
+                        <?= $model->user->last_name . ' ' . $model->user->initials ?>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

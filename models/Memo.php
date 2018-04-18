@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "memo".
  *
  * @property int $id
+ * @property string $needSign
  * @property int $user_id
  * @property string $title
  * @property string $text
@@ -18,6 +19,12 @@ use yii\db\ActiveRecord;
  */
 class Memo extends \yii\db\ActiveRecord
 {
+
+    /**
+     * @var array
+     * массив id адресатов для
+     * записи в связующую таблицу
+     */
     public $recipientsList = [];
 
     /**
@@ -62,6 +69,7 @@ class Memo extends \yii\db\ActiveRecord
             ['ref_number', 'integer'],
             ['customDate', 'safe'],
             ['customDate', 'string'],
+            ['needSign', 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -79,7 +87,8 @@ class Memo extends \yii\db\ActiveRecord
             'recipientsList' => 'Получатели',
             'created_at' => 'Создан',
             'customDate' => 'Произвольная дата',
-            'ref_number' => 'Исходящий номер'
+            'ref_number' => 'Исходящий номер',
+            'needSign' => 'Требуется подпись'
         ];
     }
 
@@ -109,9 +118,11 @@ class Memo extends \yii\db\ActiveRecord
 
     /**
      * @param string $content
+     * @param string $option
      * генерация pdf-файла на основе шаблона html
+     *
      */
-    public function makePdf($content)
+    public function makePdf($content, $option = 'F')
     {
         $recipients = implode('_', array_column($this->recipients, 'name'));
         $user_id = Yii::$app->user->id;
@@ -125,7 +136,7 @@ class Memo extends \yii\db\ActiveRecord
         $pdf = Yii::$app->pdf;
         $pdf->content = $content;
         $pdf->cssInline ='.memo-block{font-family: "Times New Roman", Times, serif;}';
-        $pdf->Output($pdf->content, $fullPath, 'F');
+        $pdf->Output($pdf->content, $fullPath, $option);
         if (file_exists($fullPath)) {
             $this->pdfPath = $fullPath;
         }

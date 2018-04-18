@@ -183,6 +183,14 @@ class MemoController extends Controller
      * @return \yii\web\Response
      * отправка письма адресатам служебной записки
      */
+    public function actionGetpdf($id)
+    {
+        $memo = $this->findModel($id);
+        $content = $this->getPdfContent($id);
+        $memo->makePdf($content, 'I');
+
+    }
+
     public function actionSendmemo($id)
     {
         $content = $this->getPdfContent($id);

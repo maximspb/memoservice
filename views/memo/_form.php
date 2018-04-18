@@ -48,7 +48,8 @@ use dosamigos\tinymce\TinyMce;
             'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         ]
     ]); ?>
-    <?= $form->field($model, 'ref_number')->textInput(['value' => $model->ref_number]) ?>
+    <?= $form->field($model, 'ref_number')->textInput(['value' => $model->ref_number, 'style'=>'width:100px']) ?>
+    <?= $form->field($model, 'needSign')->checkbox([]) ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
