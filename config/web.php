@@ -9,6 +9,7 @@ use kartik\mpdf\Pdf;
 $config = [
     'id' => 'basic',
     'language' => 'ru',
+    'timeZone' => 'Europe/Moscow',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [

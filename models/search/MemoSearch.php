@@ -21,6 +21,7 @@ class MemoSearch extends Memo
         return [
             [['id', 'user_id'], 'integer'],
             [['title', 'text'], 'safe'],
+            [['user', 'text'], 'safe']
         ];
     }
 
@@ -61,7 +62,6 @@ class MemoSearch extends Memo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
