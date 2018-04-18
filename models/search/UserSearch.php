@@ -5,22 +5,21 @@ namespace app\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Memo;
+use app\models\User;
 
 /**
- * MemoSearch represents the model behind the search form of `app\models\Memo`.
+ * UserSearch represents the model behind the search form of `app\models\User`.
  */
-class MemoSearch extends Memo
+class UserSearch extends User
 {
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['title', 'text'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['email', 'last_name', 'initials', 'job', 'telephone', 'auth_key', 'password_hash', 'password_reset_token', 'created_at', 'updated_at', 'genitive'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class MemoSearch extends Memo
      */
     public function search($params)
     {
-        $query = Memo::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -61,11 +60,18 @@ class MemoSearch extends Memo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ;
+        $query->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'initials', $this->initials])
+            ->andFilterWhere(['like', 'job', $this->job])
+            ->andFilterWhere(['like', 'telephone', $this->telephone])
+            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
+            ->andFilterWhere(['like', 'genitive', $this->genitive]);
 
         return $dataProvider;
     }

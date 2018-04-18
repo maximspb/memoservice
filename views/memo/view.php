@@ -7,34 +7,74 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Memo */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Memos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Все служебки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="memo-view">
+
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Сделать pdf и отправить', ['pdf', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'user_id',
-            'title',
-            'text:ntext',
-        ],
-    ]) ?>
+<hr>
+<div class="memo-block">
 
+    <div class="memo-head" align="right">
+        <?php foreach($model->recipients as $boss): ?>
+            <?= $boss->job ?><br> <?= $boss->name ?><br><br>
+        <?php endforeach; ?>
+        от <?=$model->user->genitive. ' '.$model->user->initials ?>
+    </div>
+    <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
+
+    <table align="left">
+        <tr>
+            <td>
+                Исх №<?= $model->ref_number ?>
+            </td>
+            <td>
+                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y',$model->created_at) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Касается:
+            </td>
+            <td>
+                <?=$model->title ?>
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <article>
+                <?=$model->text ?>
+            </article>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <?=$model->user->job ?><br>
+            <?=$model->user->telephone ?>
+        </div>
+        <div class="col-lg-8">  </div>
+        <div class="col-lg-2">
+            <?= $model->user->last_name.' '.$model->user->initials ?>
+        </div>
+    </div>
 </div>
+<hr>
+<?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+    'class' => 'btn btn-danger',
+    'data' => [
+        'confirm' => 'Действительно удалить эту служебку?',
+        'method' => 'post',
+    ],
+]) ?>
 
-<?= Html::a('Профиль', ['memo/test']) ?>

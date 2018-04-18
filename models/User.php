@@ -58,12 +58,14 @@ class User extends ActiveRecord implements IdentityInterface
             ['password_reset_token', 'unique'],
             ['last_name', 'string', 'max' => 50],
             ['last_name', 'required'],
+            ['genitive', 'string'],
+            ['genitive', 'required'],
             ['initials', 'required'],
             ['job', 'required'],
             ['initials', 'string', 'max' => 6],
             ['job', 'string', 'max' => 100],
             ['telephone', 'string', 'max' => 10],
-            ['gender', 'string', 'max' => 1]
+
 
         ];
     }
@@ -76,10 +78,13 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'email' => 'Email',
+            'job' => 'Должность',
+            'last_name' => 'Фамилия',
             'genitive' => 'Фамилия в родительном падеже ("от кого")',
             'initials' => 'Инициалы',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
+            'telephone' => 'Внутренний телефон'
         ];
     }
 

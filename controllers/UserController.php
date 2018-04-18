@@ -3,17 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Recipient;
 use yii\filters\AccessControl;
-use app\models\search\RecipientSearch;
+use app\models\User;
+use app\models\SignupForm;
+use app\models\search\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RecipientController implements the CRUD actions for Recipient model.
+ * UserController implements the CRUD actions for User model.
  */
-class RecipientController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritdoc
@@ -41,12 +42,12 @@ class RecipientController extends Controller
     }
 
     /**
-     * Lists all Recipient models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RecipientSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +57,7 @@ class RecipientController extends Controller
     }
 
     /**
-     * Displays a single Recipient model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,25 +70,24 @@ class RecipientController extends Controller
     }
 
     /**
-     * Creates a new Recipient model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Recipient();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Пользователь создан');
+            return $this->goHome();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Recipient model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -107,7 +107,7 @@ class RecipientController extends Controller
     }
 
     /**
-     * Deletes an existing Recipient model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -121,15 +121,15 @@ class RecipientController extends Controller
     }
 
     /**
-     * Finds the Recipient model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Recipient the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Recipient::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 

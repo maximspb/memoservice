@@ -2,16 +2,18 @@
 
 namespace app\controllers;
 
+use app\models\MemoRecipient;
 use app\models\Recipient;
 use Yii;
 use kartik\mpdf\Pdf;
 use app\models\Memo;
-use app\models\MemoRecipient;
+use yii\data\ActiveDataProvider;
 use app\models\search\MemoSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * MemoController implements the CRUD actions for Memo model.
@@ -24,6 +26,16 @@ class MemoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,9 +51,21 @@ class MemoController extends Controller
      */
     public function actionIndex()
     {
-
+        $user = Yii::$app->user;
         $searchModel = new MemoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $user->can('manageUsers') ?
+            $dataProvider = new ActiveDataProvider([
+                'query' => Memo::find(),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]) :
+        $dataProvider = new ActiveDataProvider([
+            'query' => Memo::find()->where(['user_id' => $user->id]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -57,13 +81,10 @@ class MemoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('memotemplate', [
-            'memo' => $this->findModel($id),
+        return $this->render('view', [
+            'model' => $this->findModel($id),
         ]);
 
-        /*return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);*/
     }
 
     /**
@@ -77,11 +98,8 @@ class MemoController extends Controller
         $recipients = Recipient::find()->all();
         $names = ArrayHelper::map($recipients, 'id', 'name', 'job');
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->user_id = Yii::$app->user->id;
-            if ($model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-            }
         }
 
         return $this->render('create', [
@@ -99,6 +117,7 @@ class MemoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        MemoRecipient::deleteAll(['memo_id' => $model->id]);
         $recipients = Recipient::find()->all();
         $names = ArrayHelper::map($recipients, 'id', 'name', 'job');
 
@@ -120,9 +139,13 @@ class MemoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        try {
+            $model = $this->findModel($id);
+            $model->delete();
+            return $this->redirect(['/memo']);
+        } catch (NotFoundHttpException | \Throwable $exception) {
+            return $this->redirect(['/memo']);
+        }
     }
 
     /**
@@ -141,12 +164,16 @@ class MemoController extends Controller
         throw new NotFoundHttpException('Страница не найдена');
     }
 
-    public function actionTest($id)
+    public function actionPdf($id)
     {
+        try {
         $model = $this->findModel($id);
+        } catch (NotFoundHttpException $exception) {
+            return $this->redirect(['/memo']);
+        }
         $pdf = new Pdf([
-            'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
-            'content' => $this->renderPartial('memotemplate', ['memo'=>$model]),
+            'mode' => Pdf::MODE_UTF8,
+            'content' => $this->renderPartial('memotemplate', ['model'=>$model]),
 
         ]);
         $pdf->format = Pdf::FORMAT_A4;
