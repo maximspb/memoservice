@@ -64,8 +64,7 @@ class MemoSearch extends Memo
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ;
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

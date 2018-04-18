@@ -54,6 +54,7 @@ class SignupForm extends Model
             'password' => 'Пароль',
         ];
     }
+
     /**
      * Signs user up.
      *

@@ -22,7 +22,7 @@ class m180406_104755_create_user_table extends Migration
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'email' => $this->string()->notNull()->unique(),
-            'last_name' =>$this->string(50)->notNull(),
+            'last_name' => $this->string(50)->notNull(),
             'genitive' => $this->string(55)->notNull(),
             'initials' => $this->string(4)->notNull(),
             'job' => $this->string(100)->notNull(),
@@ -35,14 +35,14 @@ class m180406_104755_create_user_table extends Migration
             'updated_at' => $this->timestamp(),
         ], $tableOptions);
         //конфиг стартового пользователя создается вручную:
-        $userConfig = require_once __DIR__.'/../config/firstUserConfig.php';
+        $userConfig = require_once __DIR__ . '/../config/firstUserConfig.php';
         $admin = new User();
         $admin->email = $userConfig['email'];
         $admin->last_name = 'admin';
-        $admin->genitive ='admin';
+        $admin->genitive = 'admin';
         $admin->initials = 'A.A.';
         $admin->job = 'admin';
-        $admin->telephone ='00';
+        $admin->telephone = '00';
         $admin->setPassword($userConfig['password']);
         $admin->save();
     }

@@ -37,6 +37,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return 'user';
     }
+
     public function behaviors()
     {
         return [
@@ -128,6 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -141,6 +143,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['email' => $email]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -148,6 +151,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->id;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -155,6 +159,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -162,6 +167,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key === $authKey;
     }
+
     /**
      * Validates password
      *
@@ -197,7 +203,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -206,9 +212,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         $auth = Yii::$app->authManager;
-        if ($this->isNewRecord){
-        $userRole = $auth->getRole('worker');
-        $auth->assign($userRole, $this->getId());
+        if ($this->isNewRecord) {
+            $userRole = $auth->getRole('worker');
+            $auth->assign($userRole, $this->getId());
         }
     }
 }

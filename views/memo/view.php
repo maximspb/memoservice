@@ -11,22 +11,22 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+<p>
+    <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
 
-    </p>
+</p>
 
 <hr>
 <div class="memo-block" style="padding: 10px">
 
     <div class="memo-head" align="right">
-        <?php foreach($model->recipients as $boss): ?>
+        <?php foreach ($model->recipients as $boss): ?>
             <?= $boss->job ?><br> <?= $boss->name ?><br><br>
         <?php endforeach; ?>
-        от <?=$model->user->genitive. ' '.$model->user->initials ?>
+        от <?= $model->user->genitive . ' ' . $model->user->initials ?>
     </div>
     <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
 
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 Исх №<?= $model->ref_number ?>
             </td>
             <td>
-                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y',$model->created_at) ?>
+                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y', $model->created_at) ?>
             </td>
         </tr>
         <tr>
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 Касается:
             </td>
             <td>
-                <?=$model->title ?>
+                <?= $model->title ?>
             </td>
         </tr>
 
@@ -53,18 +53,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row" style="margin-top: 10px">
         <div class="col-lg-12">
             <article>
-                <?=$model->text ?>
+                <?= $model->text ?>
             </article>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-2">
-            <?=$model->user->job ?><br>
-            <?=$model->user->telephone ?>
+            <?= $model->user->job ?><br>
+            <?= $model->user->telephone ?>
         </div>
-        <div class="col-lg-8">  </div>
+        <div class="col-lg-8"></div>
         <div class="col-lg-2">
-            <?= $model->user->last_name.' '.$model->user->initials ?>
+            <?= $model->user->last_name . ' ' . $model->user->initials ?>
         </div>
     </div>
 </div>

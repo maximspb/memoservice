@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Редактировать служебку';
 $this->params['breadcrumbs'][] = ['label' => 'Все служебки', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' =>'Касается: '. $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Касается: ' . $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование служебки';
 ?>
 <div class="memo-update">

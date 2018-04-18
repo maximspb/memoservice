@@ -25,6 +25,7 @@ class Memo extends \yii\db\ActiveRecord
      * путь к сохраненному файлу pdf
      */
     protected $pdfPath;
+
     /**
      * @inheritdoc
      */
@@ -115,16 +116,16 @@ class Memo extends \yii\db\ActiveRecord
         $recipients = implode('_', array_column($this->recipients, 'name'));
         $user_id = Yii::$app->user->id;
 
-        if (!file_exists(__DIR__.'/../archive/uploads/'.$user_id) && !is_dir(__DIR__.'/../archive/uploads/'.$user_id)) {
-            mkdir(__DIR__.'/../archive/uploads/'.$user_id);
+        if (!file_exists(__DIR__ . '/../archive/uploads/' . $user_id) && !is_dir(__DIR__ . '/../archive/uploads/' . $user_id)) {
+            mkdir(__DIR__ . '/../archive/uploads/' . $user_id);
         }
 
-        $filename = str_replace(' ','_',$this->ref_number.'_'.$recipients.'_'.$this->title.'.pdf');
-        $fullPath = __DIR__.'/../archive/uploads/'.$user_id.'/'.$filename;
+        $filename = str_replace(' ', '_', $this->ref_number . '_' . $recipients . '_' . $this->title . '.pdf');
+        $fullPath = __DIR__ . '/../archive/uploads/' . $user_id . '/' . $filename;
         $pdf = Yii::$app->pdf;
         $pdf->content = $content;
         $pdf->Output($pdf->content, $fullPath, 'F');
-        if (file_exists($fullPath)){
+        if (file_exists($fullPath)) {
             $this->pdfPath = $fullPath;
         }
     }
@@ -143,10 +144,11 @@ class Memo extends \yii\db\ActiveRecord
             ->attach($this->pdfPath)
             ->send();
     }
+
     public function afterSave($insert, $changedAttributes)
     {
         if (!empty($this->recipientsList)) {
-        $listOfRecipients = $this->recipientsList;
+            $listOfRecipients = $this->recipientsList;
             foreach ($listOfRecipients as $key => $id) {
                 $setRecipients = new MemoRecipient();
                 $setRecipients->memo_id = $this->id;

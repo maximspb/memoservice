@@ -59,12 +59,12 @@ class MemoController extends Controller
                     'pageSize' => 20,
                 ],
             ]) :
-        $dataProvider = new ActiveDataProvider([
-            'query' => Memo::find()->where(['user_id' => $user->id]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => Memo::find()->where(['user_id' => $user->id]),
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -192,18 +192,18 @@ class MemoController extends Controller
             return $this->redirect(['/memo']);
         }
         try {
-            if(!empty($model->recipients)){
+            if (!empty($model->recipients)) {
                 $model->makePdf($content);
                 $model->sendMail();
                 Yii::$app->session->setFlash('success', 'Служебка отправлена');
-                $this->redirect('/memo/view?id='.$model->id);
+                $this->redirect('/memo/view?id=' . $model->id);
             } else {
                 Yii::$app->session->setFlash('error', 'Не указаны адресаты. Отредактируйте служебку');
-                $this->redirect('/memo/view?id='.$model->id);
+                $this->redirect('/memo/view?id=' . $model->id);
             }
         } catch (\Throwable $exception) {
             Yii::$app->session->setFlash('error', 'Ошибка отправки. Попробуйте снова');
-            $this->redirect('/memo/view?id='.$model->id);
+            $this->redirect('/memo/view?id=' . $model->id);
         }
     }
 

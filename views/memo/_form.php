@@ -29,10 +29,10 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'customDate')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Выберите дату'],
         'pluginOptions' => [
-            'autoclose'=>true,
+            'autoclose' => true,
             'format' => 'dd-M-yyyy',
         ],
-    ]);?>
+    ]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

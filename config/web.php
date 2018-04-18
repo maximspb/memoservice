@@ -2,7 +2,8 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-$mailConfig = require __DIR__.'/mailConfig.php';
+$mailConfig = require __DIR__ . '/mailConfig.php';
+
 use kartik\mpdf\Pdf;
 
 $config = [
@@ -12,7 +13,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
 
@@ -68,7 +69,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -87,7 +88,7 @@ $config = [
                 ],
             ],
         ],
-        
+
     ],
 
     'params' => $params,

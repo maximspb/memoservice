@@ -17,7 +17,7 @@ Thumbs.db
 
 /archive
 
-/web/sign/*
+/web/sign
 /config/firstUserConfig.php
 /config/mailConfig.php
 
