@@ -21,7 +21,6 @@ class MemoSearch extends Memo
         return [
             [['id', 'user_id'], 'integer'],
             [['title', 'text'], 'safe'],
-            [['user', 'text'], 'safe']
         ];
     }
 
