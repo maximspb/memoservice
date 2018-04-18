@@ -11,7 +11,6 @@ use yii\web\IdentityInterface;
  * This is the model class for table "user".
  *
  * @property int $id
- * @property string $username
  * @property string $email
  * @property string $auth_key
  * @property string $password_hash
@@ -29,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    const SCENARIO_UPDATE = 'update';
 
     /**
      * @inheritdoc
@@ -37,6 +37,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return 'user';
     }
+
     public function behaviors()
     {
         return [
@@ -51,22 +52,37 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'auth_key', 'password_hash'], 'required'],
+            [['email', 'auth_key', 'password_hash'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
+            [['email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
             ['password_reset_token', 'unique'],
             ['last_name', 'string', 'max' => 50],
             ['last_name', 'required'],
+            ['genitive', 'string'],
+            ['genitive', 'required'],
             ['initials', 'required'],
             ['job', 'required'],
             ['initials', 'string', 'max' => 6],
             ['job', 'string', 'max' => 100],
             ['telephone', 'string', 'max' => 10],
-            ['gender', 'string', 'max' => 1]
+
 
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE] = [
+            'email',
+            'job',
+            'last_name',
+            'initials',
+            'telephone'
+        ];
+        return $scenarios;
     }
 
     /**
@@ -76,13 +92,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
             'email' => 'Email',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'job' => 'Должность',
+            'last_name' => 'Фамилия',
+            'genitive' => 'Фамилия в родительном падеже ("от кого")',
+            'initials' => 'Инициалы',
+            'created_at' => 'Время создания',
+            'updated_at' => 'Время обновления',
+            'telephone' => 'Внутренний телефон'
         ];
     }
 
@@ -112,6 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -119,16 +137,13 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['access_token' => $token]);
     }
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
+
+
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -136,6 +151,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->id;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -143,6 +159,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -150,6 +167,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key === $authKey;
     }
+
     /**
      * Validates password
      *
@@ -185,7 +203,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -194,24 +212,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         $auth = Yii::$app->authManager;
-        $userRole = $auth->getRole('worker');
-        $auth->assign($userRole, $this->getId());
-    }
-
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord) {
-                $this->auth_key = Yii::$app->security->generateRandomString();
-                $this->status = self::STATUS_ACTIVE;
-                try {
-                    $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-                } catch (\Throwable $e) {
-                    echo $e->getMessage(); die();
-                }
-            }
-            return true;
+        if ($this->isNewRecord) {
+            $userRole = $auth->getRole('worker');
+            $auth->assign($userRole, $this->getId());
         }
-        return false;
     }
 }
