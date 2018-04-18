@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Recipient */
 
-$this->title = 'Update Recipient: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Recipients', 'url' => ['index']];
+$this->title = 'Редактировать данные получателя';
+$this->params['breadcrumbs'][] = ['label' => 'Получатели', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновление данных';
 ?>
 <div class="recipient-update">
 

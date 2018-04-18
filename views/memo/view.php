@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Memo */
@@ -16,12 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Сделать pdf и отправить', ['pdf', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
 
     </p>
 
 <hr>
-<div class="memo-block">
+<div class="memo-block" style="padding: 10px">
 
     <div class="memo-head" align="right">
         <?php foreach($model->recipients as $boss): ?>
@@ -51,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </table>
     <br>
-    <div class="row">
+    <div class="row" style="margin-top: 10px">
         <div class="col-lg-12">
             <article>
                 <?=$model->text ?>

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\db\Migration;
 
 /**
@@ -26,7 +27,6 @@ class m180406_104755_create_user_table extends Migration
             'initials' => $this->string(4)->notNull(),
             'job' => $this->string(100)->notNull(),
             'telephone' => $this->string(10),
-            'gender' => $this->string(1),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
@@ -34,6 +34,17 @@ class m180406_104755_create_user_table extends Migration
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
         ], $tableOptions);
+        //конфиг стартового пользователя создается вручную:
+        $userConfig = require_once __DIR__.'/../config/firstUserConfig.php';
+        $admin = new User();
+        $admin->email = $userConfig['email'];
+        $admin->last_name = 'admin';
+        $admin->genitive ='admin';
+        $admin->initials = 'A.A.';
+        $admin->job = 'admin';
+        $admin->telephone ='00';
+        $admin->setPassword($userConfig['password']);
+        $admin->save();
     }
 
     /**

@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    const SCENARIO_UPDATE = 'update';
 
     /**
      * @inheritdoc
@@ -68,6 +69,19 @@ class User extends ActiveRecord implements IdentityInterface
 
 
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE] = [
+            'email',
+            'job',
+            'last_name',
+            'initials',
+            'telephone'
+        ];
+        return $scenarios;
     }
 
     /**
@@ -192,7 +206,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         $auth = Yii::$app->authManager;
+        if ($this->isNewRecord){
         $userRole = $auth->getRole('worker');
         $auth->assign($userRole, $this->getId());
+        }
     }
 }

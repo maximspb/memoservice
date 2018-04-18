@@ -30,27 +30,26 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Служебки', 'url' => ['/memo']],
-            Yii::$app->user->can('manageUsers') ? (
-            ['label' => 'Пользователи', 'url' => ['/user']] ) : ('')
+            Yii::$app->user->can('manageUsers') ?
+                (['label' => 'Пользователи', 'url' => ['/user']] ) : ('')
             ,
-            ['label' => 'Адресаты', 'url' => ['/recipient']],
+            Yii::$app->user->can('manageUsers') ?
+                (['label' => 'Адресаты', 'url' => ['/recipient']] ) : (''),
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->email . ')',
+                    'Выйти из системы (' . Yii::$app->user->identity->email . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()

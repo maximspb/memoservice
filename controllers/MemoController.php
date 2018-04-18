@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\MemoRecipient;
 use app\models\Recipient;
 use Yii;
-use kartik\mpdf\Pdf;
 use app\models\Memo;
 use yii\data\ActiveDataProvider;
 use app\models\search\MemoSearch;
@@ -126,7 +125,7 @@ class MemoController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model, 'recipients' => $names
+            'model' => $model, 'recipients' => $names,
         ]);
     }
 
@@ -164,19 +163,57 @@ class MemoController extends Controller
         throw new NotFoundHttpException('Страница не найдена');
     }
 
-    public function actionPdf($id)
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * возвращает макет для pdf
+     */
+    protected function getPdfContent($id)
     {
         try {
-        $model = $this->findModel($id);
+            $model = $this->findModel($id);
         } catch (NotFoundHttpException $exception) {
             return $this->redirect(['/memo']);
         }
-        $pdf = new Pdf([
-            'mode' => Pdf::MODE_UTF8,
-            'content' => $this->renderPartial('memotemplate', ['model'=>$model]),
+        return $this->renderPartial('memotemplate', ['model' => $model]);
+    }
 
-        ]);
-        $pdf->format = Pdf::FORMAT_A4;
-        return $pdf->render();
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * отправка письма адресатам служебной записки
+     */
+    public function actionSendmemo($id)
+    {
+        $content = $this->getPdfContent($id);
+        try {
+            $model = $this->findModel($id);
+        } catch (NotFoundHttpException $exception) {
+            return $this->redirect(['/memo']);
+        }
+        try {
+            if(!empty($model->recipients)){
+                $model->makePdf($content);
+                $model->sendMail();
+                Yii::$app->session->setFlash('success', 'Служебка отправлена');
+                $this->redirect('/memo/view?id='.$model->id);
+            } else {
+                Yii::$app->session->setFlash('error', 'Не указаны адресаты. Отредактируйте служебку');
+                $this->redirect('/memo/view?id='.$model->id);
+            }
+        } catch (\Throwable $exception) {
+            Yii::$app->session->setFlash('error', 'Ошибка отправки. Попробуйте снова');
+            $this->redirect('/memo/view?id='.$model->id);
+        }
+    }
+
+    public function actionTest($id)
+    {
+        try {
+            $model = $this->findModel($id);
+        } catch (NotFoundHttpException $exception) {
+            return $this->redirect(['/memo']);
+        }
+        return $this->renderPartial('testtemplate', ['model' => $model]);
     }
 }

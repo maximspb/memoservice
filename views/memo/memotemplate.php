@@ -38,7 +38,7 @@
         <?=$model->user->job ?><br>
         <?=$model->user->telephone ?>
     </div>
-    <div class="col-lg-8">  </div>
+    <div class="col-lg-8" align="right"><img src="/sign/sign.png" alt=""> </div>
     <div class="col-lg-2">
         <?= $model->user->last_name.' '.$model->user->initials ?>
     </div>
