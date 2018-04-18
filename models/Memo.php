@@ -116,14 +116,15 @@ class Memo extends \yii\db\ActiveRecord
         $recipients = implode('_', array_column($this->recipients, 'name'));
         $user_id = Yii::$app->user->id;
 
-        if (!file_exists(__DIR__ . '/../archive/uploads/' . $user_id) && !is_dir(__DIR__ . '/../archive/uploads/' . $user_id)) {
-            mkdir(__DIR__ . '/../archive/uploads/' . $user_id);
+        if (!file_exists(__DIR__ . '/../archive/uploads/' . $user_id) && !is_dir(__DIR__.'/../archive/uploads/'.$user_id)) {
+            mkdir(__DIR__ . '/../archive/uploads/'.$user_id);
         }
 
-        $filename = str_replace(' ', '_', $this->ref_number . '_' . $recipients . '_' . $this->title . '.pdf');
-        $fullPath = __DIR__ . '/../archive/uploads/' . $user_id . '/' . $filename;
+        $filename = str_replace(' ', '_', $this->ref_number.'_'.$recipients.'_'.$this->title.'.pdf');
+        $fullPath = __DIR__.'/../archive/uploads/'.$user_id.'/'.$filename;
         $pdf = Yii::$app->pdf;
         $pdf->content = $content;
+        $pdf->cssInline ='.memo-block{font-family: "Times New Roman", Times, serif;}';
         $pdf->Output($pdf->content, $fullPath, 'F');
         if (file_exists($fullPath)) {
             $this->pdfPath = $fullPath;
@@ -137,7 +138,8 @@ class Memo extends \yii\db\ActiveRecord
     {
         $whom = array_column($this->recipients, 'email');
         Yii::$app->mailer->compose()
-            ->setFrom('fortests2018@mail.ru')
+            //$params.php gitignored
+            ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($whom)
             ->setSubject($this->title)
             ->setHtmlBody($this->text)

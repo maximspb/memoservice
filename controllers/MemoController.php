@@ -196,24 +196,14 @@ class MemoController extends Controller
                 $model->makePdf($content);
                 $model->sendMail();
                 Yii::$app->session->setFlash('success', 'Служебка отправлена');
-                $this->redirect('/memo/view?id=' . $model->id);
+                $this->redirect(['view', 'id'=> $model->id]);
             } else {
                 Yii::$app->session->setFlash('error', 'Не указаны адресаты. Отредактируйте служебку');
-                $this->redirect('/memo/view?id=' . $model->id);
+                $this->redirect(['view', 'id'=> $model->id]);
             }
         } catch (\Throwable $exception) {
             Yii::$app->session->setFlash('error', 'Ошибка отправки. Попробуйте снова');
-            $this->redirect('/memo/view?id=' . $model->id);
+            $this->redirect(['view', 'id'=> $model->id]);
         }
-    }
-
-    public function actionTest($id)
-    {
-        try {
-            $model = $this->findModel($id);
-        } catch (NotFoundHttpException $exception) {
-            return $this->redirect(['/memo']);
-        }
-        return $this->renderPartial('testtemplate', ['model' => $model]);
     }
 }

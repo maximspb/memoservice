@@ -17,9 +17,13 @@ Thumbs.db
 
 /archive
 
-/web/sign
+/web/sign/
+
 /config/firstUserConfig.php
+
 /config/mailConfig.php
+
+/config/params.php
 
 /views/memo/testtemplate.php
 
