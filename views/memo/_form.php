@@ -29,10 +29,10 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'customDate')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Выберите дату'],
         'pluginOptions' => [
-            'autoclose'=>true,
+            'autoclose' => true,
             'format' => 'dd-M-yyyy',
         ],
-    ]);?>
+    ]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -48,7 +48,10 @@ use dosamigos\tinymce\TinyMce;
             'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
         ]
     ]); ?>
-    <?= $form->field($model, 'ref_number')->textInput(['value' => $model->ref_number]) ?>
+    <?= $form->field($model, 'ref_number')->textInput(['value' => $model->ref_number, 'style'=>'width:100px']) ?>
+    <?php if (Yii::$app->user->can('manageUsers')): ?>
+    <?= $form->field($model, 'needSign')->checkbox([]) ?>
+    <?php endif; ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

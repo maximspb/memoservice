@@ -22,7 +22,8 @@
         "kartik-v/yii2-mpdf": "*",
         "2amigos/yii2-tinymce-widget": "~1.1",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "githubjeka/yii2-gui-rbac": "1.0.2"
+        "kartik-v/bootstrap-fileinput": "dev-master",
+        "kartik-v/yii2-widget-fileinput": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

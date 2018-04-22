@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $job;
     public $telephone;
     public $genitive;
+    public $job_genitive;
 
 
     /**
@@ -36,6 +37,8 @@ class SignupForm extends Model
             [['last_name', 'initials', 'job'], 'required'],
             ['initials', 'string', 'max' => 6],
             ['job', 'string', 'max' => 100],
+            ['job_genitive', 'string'],
+            ['job_genitive', 'required'],
             ['last_name', 'string', 'max' => 50],
             ['telephone', 'string', 'max' => 10],
             ['genitive', 'string', 'max' => 55]
@@ -52,8 +55,10 @@ class SignupForm extends Model
             'telephone' => 'Внутренний телефон',
             'last_name' => 'Фамилия',
             'password' => 'Пароль',
+            'job_genitive' => 'Должность в родительном падеже (полностью)',
         ];
     }
+
     /**
      * Signs user up.
      *

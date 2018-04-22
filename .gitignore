@@ -15,6 +15,18 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+/archive
+
+/web/sign/
+
+/config/firstUserConfig.php
+
+/config/mailConfig.php
+
+/config/params.php
+
+/views/memo/testtemplate.php
+
 # composer itself is not needed
 composer.phar
 
@@ -33,3 +45,5 @@ tests/_support/_generated
 /.vagrant
 *.log
 /web/tmp
+draft
+/web/uploads/*

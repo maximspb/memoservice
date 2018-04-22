@@ -61,11 +61,14 @@ class MemoSearch extends Memo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ;
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
+        $dataProvider->sort->attributes['user.last_name'] = [
+            'asc' => ['author.name' => SORT_ASC],
+            'desc' => ['author.name' => SORT_DESC],
+        ];
 
         return $dataProvider;
     }

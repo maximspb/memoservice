@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Recipient]].
+ * This is the ActiveQuery class for [[Userfile]].
  *
- * @see Recipient
+ * @see Userfile
  */
-class RecipientQuery extends \yii\db\ActiveQuery
+class UserfileQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class RecipientQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Recipient[]|array
+     * @return Userfile[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class RecipientQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Recipient|array|null
+     * @return Userfile|array|null
      */
     public function one($db = null)
     {

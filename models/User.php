@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    const SCENARIO_UPDATE = 'update';
 
     /**
      * @inheritdoc
@@ -36,6 +37,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return 'user';
     }
+
     public function behaviors()
     {
         return [
@@ -62,12 +64,28 @@ class User extends ActiveRecord implements IdentityInterface
             ['genitive', 'required'],
             ['initials', 'required'],
             ['job', 'required'],
+            ['job_genitive', 'string'],
+            ['job_genitive', 'required'],
             ['initials', 'string', 'max' => 6],
             ['job', 'string', 'max' => 100],
             ['telephone', 'string', 'max' => 10],
 
 
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_UPDATE] = [
+            'email',
+            'job',
+            'last_name',
+            'initials',
+            'telephone',
+            'job_genitive',
+        ];
+        return $scenarios;
     }
 
     /**
@@ -84,7 +102,8 @@ class User extends ActiveRecord implements IdentityInterface
             'initials' => 'Инициалы',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
-            'telephone' => 'Внутренний телефон'
+            'telephone' => 'Внутренний телефон',
+            'job_genitive' => 'Должность в родительном падеже (полностью)',
         ];
     }
 
@@ -114,6 +133,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -127,6 +147,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['email' => $email]);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -134,6 +155,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->id;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -141,6 +163,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -148,6 +171,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->auth_key === $authKey;
     }
+
     /**
      * Validates password
      *
@@ -183,7 +207,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -192,7 +216,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         $auth = Yii::$app->authManager;
-        $userRole = $auth->getRole('worker');
-        $auth->assign($userRole, $this->getId());
+        if ($this->isNewRecord) {
+            $userRole = $auth->getRole('worker');
+            $auth->assign($userRole, $this->getId());
+        }
     }
 }

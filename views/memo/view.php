@@ -1,33 +1,48 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Memo */
-
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Все служебки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Сделать pdf и отправить', ['pdf', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-
-    </p>
+<p>
+    <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
+    <?= Html::a('Открыть pdf и сохранить на свой комп', ['getpdf', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
+    <?= Html::a('Загрузить дополнительные файлы', ['fileupload', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
+</p>
 
 <hr>
-<div class="memo-block">
+<?=  GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+        [
+            'attribute' => 'filename',
+            'header' => 'Дополнительные файлы'
+        ],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'controller' => 'userfile',
+            'template' => '{delete}',
+        ],
+
+    ],
+]);?>
+<div class="memo-block" style="padding: 10px">
 
     <div class="memo-head" align="right">
-        <?php foreach($model->recipients as $boss): ?>
+        <?php foreach ($model->recipients as $boss): ?>
             <?= $boss->job ?><br> <?= $boss->name ?><br><br>
         <?php endforeach; ?>
-        от <?=$model->user->genitive. ' '.$model->user->initials ?>
+         <?= $model->user->job_genitive.' '. $model->user->genitive . ' ' . $model->user->initials ?>
     </div>
     <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
 
@@ -37,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 Исх №<?= $model->ref_number ?>
             </td>
             <td>
-                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y',$model->created_at) ?>
+                от <?= !empty($model->customDate) ? $model->customDate : Yii::$app->formatter->asDate($model->created_at, 'long'); ?>
             </td>
         </tr>
         <tr>
@@ -45,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 Касается:
             </td>
             <td>
-                <?=$model->title ?>
+                <?= $model->title ?>
             </td>
         </tr>
 
@@ -54,18 +69,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-12">
             <article>
-                <?=$model->text ?>
+                <?= $model->text ?>
             </article>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-2">
-            <?=$model->user->job ?><br>
-            <?=$model->user->telephone ?>
-        </div>
-        <div class="col-lg-8">  </div>
-        <div class="col-lg-2">
-            <?= $model->user->last_name.' '.$model->user->initials ?>
+
+        <div class="col-lg-12" align="right">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <?= $model->user->job ?><br>
+                        <?= $model->user->telephone ?>
+                    </td>
+                    <td align="right">
+                        <?= ('1' == $model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
+                    </td>
+                    <td align="center">
+                        <?= $model->user->last_name . ' ' . $model->user->initials ?>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
