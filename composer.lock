@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9575f5f879053008215ccccf364ea815",
+    "content-hash": "3475fd514ec4e42c2c92366881633628",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -87,44 +87,6 @@
             "license": [
                 "MIT"
             ]
-        },
-        {
-            "name": "bower-asset/d3",
-            "version": "v3.5.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mbostock-bower/d3-bower.git",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "shasum": null
-            },
-            "type": "bower-asset",
-            "license": [
-                "BSD-3-Clause"
-            ]
-        },
-        {
-            "name": "bower-asset/d3-tip",
-            "version": "v0.6.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Caged/d3-tip.git",
-                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Caged/d3-tip/zipball/92bd167db0c3c24e895e7405376630be79b53a0b",
-                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b",
-                "shasum": null
-            },
-            "require": {
-                "bower-asset/d3": ">=3.5.5,<4.0.0"
-            },
-            "type": "bower-asset"
         },
         {
             "name": "bower-asset/inputmask",
@@ -313,30 +275,28 @@
             "time": "2018-02-23T01:58:20+00:00"
         },
         {
-            "name": "githubjeka/yii2-gui-rbac",
-            "version": "1.0.2",
+            "name": "kartik-v/bootstrap-fileinput",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/githubjeka/gui-rbac-yii2.git",
-                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b"
+                "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
+                "reference": "8eef362e2403ed5d8f32f21b0d6d9e673c8181de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/githubjeka/gui-rbac-yii2/zipball/a0bce1bf574af375939ac889a055b46d57a9a62b",
-                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/8eef362e2403ed5d8f32f21b0d6d9e673c8181de",
+                "reference": "8eef362e2403ed5d8f32f21b0d6d9e673c8181de",
                 "shasum": ""
             },
-            "require": {
-                "bower-asset/d3": "~3.4",
-                "bower-asset/d3-tip": ">=0.6 <0.7",
-                "php": ">=5.4.0",
-                "yiisoft/yii2": ">=2.0.6",
-                "yiisoft/yii2-bootstrap": ">=2.0.5"
-            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "githubjeka\\rbac\\": ""
+                    "kartik\\plugins\\fileinput\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -345,19 +305,27 @@
             ],
             "authors": [
                 {
-                    "name": "Evgeniy Tkachenko",
-                    "email": "et.coder@gmail.com",
-                    "homepage": "https://github.com/githubjeka"
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
                 }
             ],
-            "description": "Yii 2 RBAC management GUI interface",
-            "homepage": "https://github.com/githubjeka/gui-rbac-yii2",
+            "description": "An enhanced HTML 5 file input for Bootstrap 3.x with features for file preview for many file types, multiple selection, ajax uploads, and more.",
+            "homepage": "https://github.com/kartik-v/bootstrap-fileinput",
             "keywords": [
-                "gui",
-                "rbac",
-                "yii2"
+                "ajax",
+                "bootstrap",
+                "delete",
+                "file",
+                "image",
+                "input",
+                "jquery",
+                "multiple",
+                "preview",
+                "progress",
+                "upload"
             ],
-            "time": "2016-08-24T12:43:05+00:00"
+            "time": "2018-04-12T08:32:43+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -515,6 +483,61 @@
                 "yii2"
             ],
             "time": "2017-09-06T06:18:08+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-fileinput",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
+                "reference": "c5495641c8a86690713eb562e544bf5eaaf727cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/c5495641c8a86690713eb562e544bf5eaaf727cb",
+                "reference": "c5495641c8a86690713eb562e544bf5eaaf727cb",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-fileinput": "~4.4",
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\file\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An enhanced FileInput widget for Bootstrap 3.x with file preview, multiple selection, and more features (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-fileinput",
+            "keywords": [
+                "extension",
+                "file",
+                "form",
+                "input",
+                "jquery",
+                "plugin",
+                "upload",
+                "widget",
+                "yii2"
+            ],
+            "time": "2017-12-06T12:34:31+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
@@ -1206,6 +1229,44 @@
             "time": "2017-08-30T11:04:43+00:00"
         },
         {
+            "name": "bower-asset/d3",
+            "version": "v3.5.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbostock-bower/d3-bower.git",
+                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
+                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e",
+                "shasum": null
+            },
+            "type": "bower-asset",
+            "license": [
+                "BSD-3-Clause"
+            ]
+        },
+        {
+            "name": "bower-asset/d3-tip",
+            "version": "v0.6.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Caged/d3-tip.git",
+                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Caged/d3-tip/zipball/92bd167db0c3c24e895e7405376630be79b53a0b",
+                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/d3": ">=3.5.5,<4.0.0"
+            },
+            "type": "bower-asset"
+        },
+        {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
             "source": {
@@ -1568,6 +1629,53 @@
                 "fixtures"
             ],
             "time": "2017-08-15T16:48:10+00:00"
+        },
+        {
+            "name": "githubjeka/yii2-gui-rbac",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/githubjeka/gui-rbac-yii2.git",
+                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/githubjeka/gui-rbac-yii2/zipball/a0bce1bf574af375939ac889a055b46d57a9a62b",
+                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/d3": "~3.4",
+                "bower-asset/d3-tip": ">=0.6 <0.7",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": ">=2.0.6",
+                "yiisoft/yii2-bootstrap": ">=2.0.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "githubjeka\\rbac\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Evgeniy Tkachenko",
+                    "email": "et.coder@gmail.com",
+                    "homepage": "https://github.com/githubjeka"
+                }
+            ],
+            "description": "Yii 2 RBAC management GUI interface",
+            "homepage": "https://github.com/githubjeka/gui-rbac-yii2",
+            "keywords": [
+                "gui",
+                "rbac",
+                "yii2"
+            ],
+            "time": "2016-08-24T12:43:05+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -3737,7 +3845,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widget-select2": 20,
-        "kartik-v/yii2-widget-datepicker": 20
+        "kartik-v/yii2-widget-datepicker": 20,
+        "kartik-v/bootstrap-fileinput": 20,
+        "kartik-v/yii2-widget-fileinput": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

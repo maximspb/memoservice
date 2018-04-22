@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "memo".
  *
  * @property int $id
+ * @property string $needSign
  * @property int $user_id
  * @property string $title
  * @property string $text
@@ -18,6 +19,12 @@ use yii\db\ActiveRecord;
  */
 class Memo extends \yii\db\ActiveRecord
 {
+
+    /**
+     * @var array
+     * массив id адресатов для
+     * записи в связующую таблицу
+     */
     public $recipientsList = [];
 
     /**
@@ -62,6 +69,8 @@ class Memo extends \yii\db\ActiveRecord
             ['ref_number', 'integer'],
             ['customDate', 'safe'],
             ['customDate', 'string'],
+            ['needSign', 'safe'],
+            ['userFiles', 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -79,7 +88,8 @@ class Memo extends \yii\db\ActiveRecord
             'recipientsList' => 'Получатели',
             'created_at' => 'Создан',
             'customDate' => 'Произвольная дата',
-            'ref_number' => 'Исходящий номер'
+            'ref_number' => 'Исходящий номер',
+            'needSign' => 'Требуется подпись'
         ];
     }
 
@@ -97,6 +107,13 @@ class Memo extends \yii\db\ActiveRecord
             ->viaTable('memo_recipient', ['memo_id' => 'id']);
     }
 
+
+    public function getUserfiles()
+    {
+
+        return Userfile::find()->where(['memo_id' =>$this->id]);
+    }
+
     /**
      * @inheritdoc
      * @return MemoQuery the active query used by this AR class.
@@ -109,9 +126,11 @@ class Memo extends \yii\db\ActiveRecord
 
     /**
      * @param string $content
+     * @param string $option
      * генерация pdf-файла на основе шаблона html
+     *
      */
-    public function makePdf($content)
+    public function makePdf($content, $option = 'F')
     {
         $recipients = implode('_', array_column($this->recipients, 'name'));
         $user_id = Yii::$app->user->id;
@@ -125,7 +144,7 @@ class Memo extends \yii\db\ActiveRecord
         $pdf = Yii::$app->pdf;
         $pdf->content = $content;
         $pdf->cssInline ='.memo-block{font-family: "Times New Roman", Times, serif;}';
-        $pdf->Output($pdf->content, $fullPath, 'F');
+        $pdf->Output($pdf->content, $fullPath, $option);
         if (file_exists($fullPath)) {
             $this->pdfPath = $fullPath;
         }
@@ -137,14 +156,21 @@ class Memo extends \yii\db\ActiveRecord
     public function sendMail()
     {
         $whom = array_column($this->recipients, 'email');
-        Yii::$app->mailer->compose()
+        $fileNames = array_column(Userfile::find()->where(['memo_id' =>$this->id])->asArray()->all(), 'filename');
+
+        $mail = Yii::$app->mailer;
+        $message = $mail->compose()
             //$params.php gitignored
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($whom)
             ->setSubject($this->title)
             ->setHtmlBody($this->text)
-            ->attach($this->pdfPath)
-            ->send();
+            ->attach($this->pdfPath);
+
+        foreach ($fileNames as $file) {
+            $message->attach('uploads/'.$file);
+        }
+        $mail->send($message);
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -177,9 +203,16 @@ class Memo extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+
     public function beforeValidate()
     {
         $this->user_id = Yii::$app->user->id;
         return parent::beforeValidate();
+    }
+
+    public function beforeDelete()
+    {
+
+        return parent::beforeDelete();
     }
 }

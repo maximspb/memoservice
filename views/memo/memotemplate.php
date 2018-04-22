@@ -1,9 +1,14 @@
+<?php
+
+use yii\helpers\Html;
+?>
+
 <div class="memo-block">
     <div class="memo-head" align="right">
         <?php foreach ($model->recipients as $boss): ?>
             <?= $boss->job ?><br> <?= $boss->name ?><br><br>
         <?php endforeach; ?>
-        от <?= $model->user->genitive . ' ' . $model->user->initials ?>
+         <?= $model->user->genitive . ' ' . $model->user->initials ?>
     </div>
     <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
 
@@ -13,7 +18,7 @@
                 Исх №<?= $model->ref_number ?>
             </td>
             <td>
-                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y', $model->created_at) ?>
+                от <?= !empty($model->customDate) ? $model->customDate : Yii::$app->formatter->asDate($model->created_at, 'long'); ?>
             </td>
         </tr>
         <tr>
@@ -35,7 +40,6 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col-lg-12" align="right">
             <table width="100%">
                 <tr>
@@ -44,14 +48,13 @@
                         <?= $model->user->telephone ?>
                     </td>
                     <td align="right">
-                        <img src="/sign/sign.png" alt="">
+                     <?= !empty($model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
                     </td>
-                    <td>
+                    <td align="center">
                         <?= $model->user->last_name . ' ' . $model->user->initials ?>
                     </td>
                 </tr>
             </table>
-
         </div>
     </div>
 </div>

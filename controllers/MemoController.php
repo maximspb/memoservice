@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\MemoRecipient;
 use app\models\Recipient;
+use app\models\UploadForm;
+use app\models\Userfile;
 use Yii;
 use app\models\Memo;
 use yii\data\ActiveDataProvider;
@@ -13,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * MemoController implements the CRUD actions for Memo model.
@@ -80,8 +83,13 @@ class MemoController extends Controller
      */
     public function actionView($id)
     {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Userfile::find()->where(['memo_id' => $id])
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider
         ]);
 
     }
@@ -143,7 +151,7 @@ class MemoController extends Controller
             $model->delete();
             return $this->redirect(['/memo']);
         } catch (NotFoundHttpException | \Throwable $exception) {
-            return $this->redirect(['/memo']);
+            return $this->redirect(['index']);
         }
     }
 
@@ -178,10 +186,41 @@ class MemoController extends Controller
         return $this->renderPartial('memotemplate', ['model' => $model]);
     }
 
+    public function actionFileupload($id)
+    {
+        $memo = $this->findModel($id);
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->userFile = UploadedFile::getInstances($model, 'userFile');
+            $model->memo_id = $memo->id;
+            if ($model->uploadFile()) {
+               return $this->redirect(['view', 'id' => $memo->id]);
+            }
+        }
+        return $this->render('upload', ['model' => $model]);
+
+    }
+
     /**
      * @param $id
      * @return \yii\web\Response
      * отправка письма адресатам служебной записки
+     */
+    public function actionGetpdf($id)
+    {
+        $memo = $this->findModel($id);
+        $content = $this->getPdfContent($id);
+        $memo->makePdf($content, 'I');
+
+    }
+
+    /**
+     * Метод отправки письма с пдф получателю.
+     * Пдф генерируется в модели, там же прикрепляются
+     * к письму доп. файлы, если они есть
+     * @param $id
+     * @return \yii\web\Response
      */
     public function actionSendmemo($id)
     {
@@ -206,4 +245,5 @@ class MemoController extends Controller
             $this->redirect(['view', 'id'=> $model->id]);
         }
     }
+
 }

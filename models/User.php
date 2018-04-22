@@ -64,6 +64,8 @@ class User extends ActiveRecord implements IdentityInterface
             ['genitive', 'required'],
             ['initials', 'required'],
             ['job', 'required'],
+            ['job_genitive', 'string'],
+            ['job_genitive', 'required'],
             ['initials', 'string', 'max' => 6],
             ['job', 'string', 'max' => 100],
             ['telephone', 'string', 'max' => 10],
@@ -80,7 +82,8 @@ class User extends ActiveRecord implements IdentityInterface
             'job',
             'last_name',
             'initials',
-            'telephone'
+            'telephone',
+            'job_genitive',
         ];
         return $scenarios;
     }
@@ -99,7 +102,8 @@ class User extends ActiveRecord implements IdentityInterface
             'initials' => 'Инициалы',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
-            'telephone' => 'Внутренний телефон'
+            'telephone' => 'Внутренний телефон',
+            'job_genitive' => 'Должность в родительном падеже (полностью)',
         ];
     }
 

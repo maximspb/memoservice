@@ -20,7 +20,8 @@ class m180411_040545_create_memo_table extends Migration
             'ref_number' => $this->integer()->notNull(),
             'customDate' => $this->string()->defaultValue(null),
             'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp()
+            'updated_at' => $this->timestamp(),
+            'needSign' => $this->integer()->defaultValue(null)
         ]);
 
         $this->addForeignKey(

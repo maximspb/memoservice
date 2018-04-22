@@ -21,7 +21,6 @@ class MemoSearch extends Memo
         return [
             [['id', 'user_id'], 'integer'],
             [['title', 'text'], 'safe'],
-            [['user', 'text'], 'safe']
         ];
     }
 
@@ -65,6 +64,11 @@ class MemoSearch extends Memo
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
+
+        $dataProvider->sort->attributes['user.last_name'] = [
+            'asc' => ['author.name' => SORT_ASC],
+            'desc' => ['author.name' => SORT_DESC],
+        ];
 
         return $dataProvider;
     }
