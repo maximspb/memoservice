@@ -210,9 +210,15 @@ class Memo extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
-    public function beforeDelete()
+    /*public function beforeDelete()
     {
 
+
+            foreach ($this->userfiles as $file){
+                unlink('uploads' . '/' . $file->filename);
+                Userfile::deleteAll(['memo_id' => $this->id]);
+            }
+
         return parent::beforeDelete();
-    }
+    }*/
 }
