@@ -26,6 +26,7 @@ class m180406_104755_create_user_table extends Migration
             'genitive' => $this->string(55)->notNull(),
             'initials' => $this->string(4)->notNull(),
             'job' => $this->string(100)->notNull(),
+            'job_genitive' => $this->string()->notNull(),
             'telephone' => $this->string(10),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),

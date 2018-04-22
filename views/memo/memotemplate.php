@@ -8,7 +8,7 @@ use yii\helpers\Html;
         <?php foreach ($model->recipients as $boss): ?>
             <?= $boss->job ?><br> <?= $boss->name ?><br><br>
         <?php endforeach; ?>
-        от <?= $model->user->genitive . ' ' . $model->user->initials ?>
+         <?= $model->user->genitive . ' ' . $model->user->initials ?>
     </div>
     <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
 
@@ -18,7 +18,7 @@ use yii\helpers\Html;
                 Исх №<?= $model->ref_number ?>
             </td>
             <td>
-                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y', $model->created_at) ?>
+                от <?= !empty($model->customDate) ? $model->customDate : Yii::$app->formatter->asDate($model->created_at, 'long'); ?>
             </td>
         </tr>
         <tr>

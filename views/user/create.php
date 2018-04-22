@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'job') ?>
 
             <?= $form->field($model, 'telephone') ?>
+
+            <?= $form->field($model, 'job_genitive')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
                 <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>

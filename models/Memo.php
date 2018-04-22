@@ -70,6 +70,7 @@ class Memo extends \yii\db\ActiveRecord
             ['customDate', 'safe'],
             ['customDate', 'string'],
             ['needSign', 'safe'],
+            ['userFiles', 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -104,6 +105,13 @@ class Memo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Recipient::class, ['id' => 'recipient_id'])
             ->viaTable('memo_recipient', ['memo_id' => 'id']);
+    }
+
+
+    public function getUserfiles()
+    {
+
+        return Userfile::find()->where(['memo_id' =>$this->id]);
     }
 
     /**
@@ -148,14 +156,21 @@ class Memo extends \yii\db\ActiveRecord
     public function sendMail()
     {
         $whom = array_column($this->recipients, 'email');
-        Yii::$app->mailer->compose()
+        $fileNames = array_column(Userfile::find()->where(['memo_id' =>$this->id])->asArray()->all(), 'filename');
+
+        $mail = Yii::$app->mailer;
+        $message = $mail->compose()
             //$params.php gitignored
             ->setFrom(Yii::$app->params['adminEmail'])
             ->setTo($whom)
             ->setSubject($this->title)
             ->setHtmlBody($this->text)
-            ->attach($this->pdfPath)
-            ->send();
+            ->attach($this->pdfPath);
+
+        foreach ($fileNames as $file) {
+            $message->attach('uploads/'.$file);
+        }
+        $mail->send($message);
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -188,9 +203,16 @@ class Memo extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+
     public function beforeValidate()
     {
         $this->user_id = Yii::$app->user->id;
         return parent::beforeValidate();
+    }
+
+    public function beforeDelete()
+    {
+
+        return parent::beforeDelete();
     }
 }

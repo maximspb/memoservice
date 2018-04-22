@@ -49,7 +49,9 @@ use dosamigos\tinymce\TinyMce;
         ]
     ]); ?>
     <?= $form->field($model, 'ref_number')->textInput(['value' => $model->ref_number, 'style'=>'width:100px']) ?>
+    <?php if (Yii::$app->user->can('manageUsers')): ?>
     <?= $form->field($model, 'needSign')->checkbox([]) ?>
+    <?php endif; ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

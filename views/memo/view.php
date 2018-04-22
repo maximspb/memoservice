@@ -1,10 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Memo */
-
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Все служебки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,17 +17,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::a('Отредактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     <?= Html::a('Сделать pdf и отправить', ['sendmemo', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
     <?= Html::a('Открыть pdf и сохранить на свой комп', ['getpdf', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
-
+    <?= Html::a('Загрузить дополнительные файлы', ['fileupload', 'id' => $model->id], ['class' => 'btn btn-light']) ?>
 </p>
 
 <hr>
+<?=  GridView::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => [
+        [
+            'attribute' => 'filename',
+            'header' => 'Дополнительные файлы'
+        ],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'controller' => 'userfile',
+            'template' => '{delete}',
+        ],
+
+    ],
+]);?>
 <div class="memo-block" style="padding: 10px">
 
     <div class="memo-head" align="right">
         <?php foreach ($model->recipients as $boss): ?>
             <?= $boss->job ?><br> <?= $boss->name ?><br><br>
         <?php endforeach; ?>
-        от <?= $model->user->genitive . ' ' . $model->user->initials ?>
+         <?= $model->user->job_genitive.' '. $model->user->genitive . ' ' . $model->user->initials ?>
     </div>
     <h3 align="center">СЛУЖЕБНАЯ ЗАПИСКА</h3>
 
@@ -37,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 Исх №<?= $model->ref_number ?>
             </td>
             <td>
-                от <?= !empty($model->customDate) ? $model->customDate : date('"d" M Y', $model->created_at) ?>
+                от <?= !empty($model->customDate) ? $model->customDate : Yii::$app->formatter->asDate($model->created_at, 'long'); ?>
             </td>
         </tr>
         <tr>

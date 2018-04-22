@@ -45,3 +45,5 @@ tests/_support/_generated
 /.vagrant
 *.log
 /web/tmp
+draft
+/web/uploads/*
