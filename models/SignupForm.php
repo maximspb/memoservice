@@ -73,6 +73,7 @@ class SignupForm extends Model
             $user->initials = $this->initials;
             $user->genitive = $this->genitive;
             $user->job = $this->job;
+            $user->job_genitive = $this->job_genitive;
             $user->telephone = $this->telephone;
             $user->setPassword($this->password);
             $user->auth_key = Yii::$app->security->generateRandomString();

@@ -21,6 +21,7 @@ use yii\web\IdentityInterface;
  * @property string $last_name
  * @property string $initials
  * @property string $job
+ * @property string $job_genitive
  * @property string $telephone
  * @property string $gender
  */

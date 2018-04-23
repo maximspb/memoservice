@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "memo".
@@ -53,7 +54,7 @@ class Memo extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
-                //'value' => new Expression('NOW()'),
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -210,9 +211,15 @@ class Memo extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
-    public function beforeDelete()
+    /*public function beforeDelete()
     {
 
+
+            foreach ($this->userfiles as $file){
+                unlink('uploads' . '/' . $file->filename);
+                Userfile::deleteAll(['memo_id' => $this->id]);
+            }
+
         return parent::beforeDelete();
-    }
+    }*/
 }

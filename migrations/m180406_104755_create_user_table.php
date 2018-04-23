@@ -37,15 +37,22 @@ class m180406_104755_create_user_table extends Migration
         ], $tableOptions);
         //конфиг стартового пользователя создается вручную:
         $userConfig = require_once __DIR__ . '/../config/firstUserConfig.php';
-        $admin = new User();
-        $admin->email = $userConfig['email'];
-        $admin->last_name = 'admin';
-        $admin->genitive = 'admin';
-        $admin->initials = 'A.A.';
-        $admin->job = 'admin';
-        $admin->telephone = '00';
-        $admin->setPassword($userConfig['password']);
-        $admin->save();
+
+        //внесение в базу данных первого пользователя в системе,
+        // которому позднее через Rbac/init будет присвоен статус админа
+        $this->insert('{{%user}}',
+            [
+                'email' =>$userConfig['email'],
+                'last_name' => 'admin',
+                'genitive' => 'admin',
+                'initials' => 'A.A.',
+                'job' => 'admin',
+                'telephone' => '0000',
+                'job_genitive' => 'admin',
+                'auth_key' =>  \Yii::$app->security->generateRandomString(),
+                'password_hash' =>\Yii::$app->security->generatePasswordHash($userConfig['password']),
+            ]
+        );
     }
 
     /**
