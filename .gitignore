@@ -15,7 +15,7 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
-/archive
+/archive/uploads/*
 
 /web/sign/
 
