@@ -25,8 +25,8 @@ class UploadForm extends Model
     {
         if ($this->validate()) {
             foreach ($this->userFile as $file) {
-                $nameToSave = random_int(0, 99).$file->baseName . '.' . $file->
-                    extension;
+                $nameToSave = random_int(0, 99).str_replace(' ','_',$file->baseName . '.' . $file->
+                        extension);
                 $file->saveAs('uploads/' . $nameToSave);
                 $uploaded = new Userfile();
                 $uploaded->filename = $nameToSave;

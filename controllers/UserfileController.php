@@ -54,7 +54,8 @@ class UserfileController extends Controller
     public function actionDelete($id)
     {
         try {
-        $this->findModel($id)->delete();
+            unlink('uploads' . '/' . $this->findModel($id)->filename);
+            $this->findModel($id)->delete();
         } catch (\Throwable|NotFoundHttpException $exception){
             return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         }
