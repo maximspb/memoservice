@@ -99,6 +99,7 @@ class UserController extends Controller
         $model->scenario = 'update';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -119,6 +120,24 @@ class UserController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionChangePass($id)
+    {
+        $model = new SignupForm();
+        $user = $this->findModel($id);
+        $user->scenario = 'change_password';
+        if ($model->load(Yii::$app->request->post())){
+            $user->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            if ($user->save()){
+                Yii::$app->session->setFlash('success', 'Пароль изменен');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        return $this->render('changePassword', [
+            'model' => $model,
+            'user' => $user,
+        ]);
     }
 
     /**

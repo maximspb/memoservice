@@ -24,12 +24,15 @@ use yii\web\IdentityInterface;
  * @property string $job_genitive
  * @property string $telephone
  * @property string $gender
+ * @property string $passString;
+ *
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const SCENARIO_UPDATE = 'update';
+    const SCENARIO_CHANGE_PASSWORD = 'change_password';
 
     /**
      * @inheritdoc
@@ -85,6 +88,9 @@ class User extends ActiveRecord implements IdentityInterface
             'initials',
             'telephone',
             'job_genitive',
+        ];
+        $scenarios[self::SCENARIO_CHANGE_PASSWORD] = [
+            'password_hash'
         ];
         return $scenarios;
     }
