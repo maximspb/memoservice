@@ -112,7 +112,7 @@ class Memo extends \yii\db\ActiveRecord
     public function getUserfiles()
     {
 
-        return Userfile::find()->where(['memo_id' =>$this->id]);
+        return Userfile::find()->where(['memo_id' =>$this->id])->asArray()->all();
     }
 
     /**
@@ -211,15 +211,15 @@ class Memo extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
-    /*public function beforeDelete()
+    public function beforeDelete()
     {
 
-
-            foreach ($this->userfiles as $file){
-                unlink('uploads' . '/' . $file->filename);
+        if (!empty($this->getUserfiles())){
+            foreach ($this->getUserfiles() as $file){
+                unlink('uploads' . '/' . $file['filename']);
                 Userfile::deleteAll(['memo_id' => $this->id]);
             }
-
+        }
         return parent::beforeDelete();
-    }*/
+    }
 }
