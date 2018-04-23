@@ -19,8 +19,8 @@ class m180411_040545_create_memo_table extends Migration
             'text' => $this->text()->notNull(),
             'ref_number' => $this->integer()->notNull(),
             'customDate' => $this->string()->defaultValue(null),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'created_at' => $this->timestamp()->defaultValue(null),
+            'updated_at' => $this->timestamp()->defaultValue(null),
             'needSign' => $this->integer()->defaultValue(null)
         ]);
 

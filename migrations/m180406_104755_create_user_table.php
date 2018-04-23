@@ -32,8 +32,8 @@ class m180406_104755_create_user_table extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(1),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'created_at' => $this->timestamp()->defaultValue(null),
+            'updated_at' => $this->timestamp()->defaultValue(null),
         ], $tableOptions);
         //конфиг стартового пользователя создается вручную:
         $userConfig = require_once __DIR__ . '/../config/firstUserConfig.php';
