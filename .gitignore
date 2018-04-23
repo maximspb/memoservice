@@ -15,15 +15,13 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
-/archive/uploads/*
-
-/web/sign/
 
 
+/config/firstUserConfig.php
 
+/config/mailConfig.php
 
-
-
+/config/params.php
 
 /views/memo/testtemplate.php
 
@@ -46,4 +44,3 @@ tests/_support/_generated
 *.log
 /web/tmp
 draft
-/web/uploads/*
