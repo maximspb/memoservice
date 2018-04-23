@@ -15,9 +15,7 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
-/archive/uploads/*
 
-/web/sign/
 
 /config/firstUserConfig.php
 
@@ -46,4 +44,3 @@ tests/_support/_generated
 *.log
 /web/tmp
 draft
-/web/uploads/*
