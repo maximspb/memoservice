@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login" align="center">
     <h1><?= Html::encode($this->title) ?></h1>
     <hr width="60%" size="1">
-
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
