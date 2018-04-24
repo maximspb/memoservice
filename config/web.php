@@ -16,9 +16,6 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-    'modules' => [
-
-    ],
 
     'components' => [
         'pdf' => [

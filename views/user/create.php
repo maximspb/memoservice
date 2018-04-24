@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'job_genitive')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Создать', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
