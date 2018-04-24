@@ -94,7 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <hr>
-<?php var_dump('uploads/'.$model->user->id.'/sign/sign.png') ?>
 <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
     'class' => 'btn btn-danger',
     'data' => [
