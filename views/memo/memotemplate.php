@@ -48,7 +48,7 @@ use yii\helpers\Html;
                         <?= $model->user->telephone ?>
                     </td>
                     <td align="right">
-                     <?= !empty($model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
+                     <?= !empty($model->needSign) ?  Html::img('/uploads/' .$model->user->id.'/sign/'. 'sign.png') : '' ?>
                     </td>
                     <td align="center">
                         <?= $model->user->last_name . ' ' . $model->user->initials ?>
