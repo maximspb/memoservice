@@ -34,7 +34,7 @@ class SignUploadForm extends Model
 
             if (!file_exists(__DIR__ . '/../web/uploads/'.$this->userId.'/sign/'
                 ) && !is_dir(__DIR__ . '/../web/uploads/'.$this->userId.'/sign/')) {
-                mkdir(__DIR__ . '/../web/uploads/'.$this->userId.'/sign/', $recursive = true);
+                mkdir(__DIR__ . '/../web/uploads/'.$this->userId.'/sign/', 0775, true);
             }
 
             $fullFileName = 'uploads/' .$this->userId.'/sign/'. 'sign'
