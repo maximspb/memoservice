@@ -168,8 +168,10 @@ class Memo extends \yii\db\ActiveRecord
             ->setHtmlBody($this->text)
             ->attach($this->pdfPath);
 
-        foreach ($fileNames as $file) {
-            $message->attach('uploads/'.$file);
+        if (!empty($fileNames)){
+            foreach ($fileNames as $file) {
+                $message->attach('uploads/'.$file);
+            }
         }
         $mail->send($message);
     }
