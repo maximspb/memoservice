@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $model->user->telephone ?>
                     </td>
                     <td align="right">
-                        <?= ('1' == $model->needSign) ?  Html::img('/sign/sign.png') : '' ?>
+                        <?= ('1' == $model->needSign) ?  Html::img('/uploads/' .$model->user->id.'/sign/'. 'sign.png') : '' ?>
                     </td>
                     <td align="center">
                         <?= $model->user->last_name . ' ' . $model->user->initials ?>
@@ -94,6 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <hr>
+<?php var_dump('uploads/'.$model->user->id.'/sign/sign.png') ?>
 <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
     'class' => 'btn btn-danger',
     'data' => [

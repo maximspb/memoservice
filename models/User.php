@@ -236,4 +236,25 @@ class User extends ActiveRecord implements IdentityInterface
             $auth->assign($userRole, $this->getId());
         }
     }
+
+    public function beforeDelete()
+    {
+        Memo::deleteAll(['user_id' => $this->id]);
+        $dir = __DIR__.'/../archive/uploads'.'/'.$this->id;
+        function rmdir_recursive($dir) {
+            foreach(scandir($dir) as $file) {
+                if ('.' === $file || '..' === $file){
+                    continue;
+                }
+                if (is_dir('$dir/$file')) {
+                    rmdir_recursive('$dir/$file');
+                } else {
+                    unlink('$dir/$file');
+                }
+            }
+            rmdir($dir);
+        }
+        rmdir_recursive($dir);
+        return parent::beforeDelete();
+    }
 }

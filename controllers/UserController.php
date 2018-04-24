@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\SignUploadForm;
 use Yii;
 use yii\filters\AccessControl;
 use app\models\User;
@@ -10,6 +11,7 @@ use app\models\search\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -122,6 +124,13 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Метод смены пароля
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\Exception
+     */
     public function actionChangePass($id)
     {
         $model = new SignupForm();
@@ -140,6 +149,26 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Метод загрузки изображения-подписи
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionSetSign($id)
+    {
+        $userId = $this->findModel($id)->id;
+        $model = new SignUploadForm();
+        if (Yii::$app->request->isPost) {
+            $model->signFile = UploadedFile::getInstance($model, 'signFile');
+            $model->userId = $userId;
+            if ($model->uploadFile()) {
+                return $this->redirect(['view', 'id' => $userId]);
+            }
+        }
+        return $this->render('uploadSign', ['model' => $model]);
+
+    }
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

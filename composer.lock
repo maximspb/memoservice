@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3475fd514ec4e42c2c92366881633628",
+    "content-hash": "952c09f96cbaafd1162a7977ecd6c03b",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -71,7 +71,7 @@
             "version": "v3.3.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
             },
             "dist": {
@@ -275,17 +275,75 @@
             "time": "2018-02-23T01:58:20+00:00"
         },
         {
+            "name": "imagine/imagine",
+            "version": "v0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/a9a702a946073cbca166718f1b02a1e72d742daa",
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "^3.3",
+                "symfony/phpunit-bridge": "^3.2"
+            },
+            "suggest": {
+                "ext-gd": "to use the GD implementation",
+                "ext-gmagick": "to use the Gmagick implementation",
+                "ext-imagick": "to use the Imagick implementation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "drawing",
+                "graphics",
+                "image manipulation",
+                "image processing"
+            ],
+            "time": "2017-05-16T10:31:22+00:00"
+        },
+        {
             "name": "kartik-v/bootstrap-fileinput",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "8eef362e2403ed5d8f32f21b0d6d9e673c8181de"
+                "reference": "7b52d2440f839c629714ffa05e0501d19c44f30e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/8eef362e2403ed5d8f32f21b0d6d9e673c8181de",
-                "reference": "8eef362e2403ed5d8f32f21b0d6d9e673c8181de",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/7b52d2440f839c629714ffa05e0501d19c44f30e",
+                "reference": "7b52d2440f839c629714ffa05e0501d19c44f30e",
                 "shasum": ""
             },
             "type": "library",
@@ -325,7 +383,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2018-04-12T08:32:43+00:00"
+            "time": "2018-04-23T12:36:33+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -1118,6 +1176,54 @@
             "time": "2018-03-21T16:15:55+00:00"
         },
         {
+            "name": "yiisoft/yii2-imagine",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-imagine.git",
+                "reference": "a8a1a068862a86e3395e665bc86e63d5c9b60841"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-imagine/zipball/a8a1a068862a86e3395e665bc86e63d5c9b60841",
+                "reference": "a8a1a068862a86e3395e665bc86e63d5c9b60841",
+                "shasum": ""
+            },
+            "require": {
+                "imagine/imagine": "~0.6.0 | ~0.7.1",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\imagine\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "amigo.cobos@gmail.com"
+                }
+            ],
+            "description": "The Imagine integration for the Yii framework",
+            "keywords": [
+                "helper",
+                "image",
+                "imagine",
+                "yii2"
+            ],
+            "time": "2018-02-22T11:57:06+00:00"
+        },
+        {
             "name": "yiisoft/yii2-swiftmailer",
             "version": "2.0.7",
             "source": {
@@ -1229,44 +1335,6 @@
             "time": "2017-08-30T11:04:43+00:00"
         },
         {
-            "name": "bower-asset/d3",
-            "version": "v3.5.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mbostock-bower/d3-bower.git",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "shasum": null
-            },
-            "type": "bower-asset",
-            "license": [
-                "BSD-3-Clause"
-            ]
-        },
-        {
-            "name": "bower-asset/d3-tip",
-            "version": "v0.6.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Caged/d3-tip.git",
-                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Caged/d3-tip/zipball/92bd167db0c3c24e895e7405376630be79b53a0b",
-                "reference": "92bd167db0c3c24e895e7405376630be79b53a0b",
-                "shasum": null
-            },
-            "require": {
-                "bower-asset/d3": ">=3.5.5,<4.0.0"
-            },
-            "type": "bower-asset"
-        },
-        {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
             "source": {
@@ -1376,16 +1444,16 @@
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "7.1.0",
+            "version": "7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "cde840638d021804ce93e8f98bcb7edbf6935423"
+                "reference": "33e8ccf2f7abf5c031eeae9802b821d30ec0f7fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/cde840638d021804ce93e8f98bcb7edbf6935423",
-                "reference": "cde840638d021804ce93e8f98bcb7edbf6935423",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/33e8ccf2f7abf5c031eeae9802b821d30ec0f7fc",
+                "reference": "33e8ccf2f7abf5c031eeae9802b821d30ec0f7fc",
                 "shasum": ""
             },
             "require": {
@@ -1415,7 +1483,7 @@
                 }
             ],
             "description": "PHPUnit classes used by Codeception",
-            "time": "2018-04-10T09:05:14+00:00"
+            "time": "2018-04-20T10:17:13+00:00"
         },
         {
             "name": "codeception/specify",
@@ -1629,53 +1697,6 @@
                 "fixtures"
             ],
             "time": "2017-08-15T16:48:10+00:00"
-        },
-        {
-            "name": "githubjeka/yii2-gui-rbac",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/githubjeka/gui-rbac-yii2.git",
-                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/githubjeka/gui-rbac-yii2/zipball/a0bce1bf574af375939ac889a055b46d57a9a62b",
-                "reference": "a0bce1bf574af375939ac889a055b46d57a9a62b",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/d3": "~3.4",
-                "bower-asset/d3-tip": ">=0.6 <0.7",
-                "php": ">=5.4.0",
-                "yiisoft/yii2": ">=2.0.6",
-                "yiisoft/yii2-bootstrap": ">=2.0.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "githubjeka\\rbac\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Evgeniy Tkachenko",
-                    "email": "et.coder@gmail.com",
-                    "homepage": "https://github.com/githubjeka"
-                }
-            ],
-            "description": "Yii 2 RBAC management GUI interface",
-            "homepage": "https://github.com/githubjeka/gui-rbac-yii2",
-            "keywords": [
-                "gui",
-                "rbac",
-                "yii2"
-            ],
-            "time": "2016-08-24T12:43:05+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2081,23 +2102,23 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.7.5",
+            "version": "1.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401"
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/dfd6be44111a7c41c2e884a336cc4f461b3b2401",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
-                "sebastian/comparator": "^1.1|^2.0",
+                "sebastian/comparator": "^1.1|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
@@ -2140,7 +2161,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-02-19T10:16:54+00:00"
+            "time": "2018-04-18T13:57:24+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2393,16 +2414,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.1.3",
+            "version": "7.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a7834993ddbf4b0ed2c3b2dc1f3b1d093ef910a9"
+                "reference": "6d51299e307dc510149e0b7cd1931dd11770e1cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a7834993ddbf4b0ed2c3b2dc1f3b1d093ef910a9",
-                "reference": "a7834993ddbf4b0ed2c3b2dc1f3b1d093ef910a9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6d51299e307dc510149e0b7cd1931dd11770e1cb",
+                "reference": "6d51299e307dc510149e0b7cd1931dd11770e1cb",
                 "shasum": ""
             },
             "require": {
@@ -2421,7 +2442,7 @@
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.0",
                 "phpunit/phpunit-mock-objects": "^6.1.1",
-                "sebastian/comparator": "^2.1",
+                "sebastian/comparator": "^2.1 || ^3.0",
                 "sebastian/diff": "^3.0",
                 "sebastian/environment": "^3.1",
                 "sebastian/exporter": "^3.1",
@@ -2469,7 +2490,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-13T02:28:50+00:00"
+            "time": "2018-04-18T13:41:53+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
