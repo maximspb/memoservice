@@ -137,7 +137,7 @@ class Memo extends \yii\db\ActiveRecord
         $user_id = Yii::$app->user->id;
 
         if (!file_exists(__DIR__ . '/../archive/uploads/' . $user_id) && !is_dir(__DIR__.'/../archive/uploads/'.$user_id)) {
-            mkdir(__DIR__ . '/../archive/uploads/'.$user_id);
+            mkdir(__DIR__ . '/../archive/uploads/'.$user_id, 0775, true);
         }
 
         $filename = str_replace(' ', '_', $this->ref_number.'_'.$recipients.'_'.$this->title.'.pdf');
