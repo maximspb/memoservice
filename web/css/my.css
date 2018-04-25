@@ -5,3 +5,16 @@
 .memo-block {
     font-family: "Times New Roman", Times, serif;
 }
+
+
+figure img {
+    border: 1px solid lightgrey;
+}
+
+.guide-block {
+    width: 70%;
+}
+
+figure .guide {
+    padding:  20px;
+}

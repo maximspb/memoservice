@@ -52,6 +52,9 @@ class RecipientController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
     }
 

@@ -54,7 +54,7 @@ class MemoController extends Controller
     public function actionIndex()
     {
         $user = Yii::$app->user;
-        $searchModel = new MemoSearch();
+        //$searchModel = new MemoSearch();
         $user->can('manageUsers') ?
             $dataProvider = new ActiveDataProvider([
                 'query' => Memo::find(),
@@ -70,7 +70,7 @@ class MemoController extends Controller
             ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            //'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
